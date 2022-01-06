@@ -2,6 +2,8 @@ package com.example.underthehoodlist
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Parcelable
+import android.os.PersistableBundle
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -30,6 +32,18 @@ class MainActivity : AppCompatActivity() {
         initViews()
 
 
+        if (savedInstanceState!=null){
+            val savedlaptops= savedInstanceState.getParcelableArrayList<Laptop>("laptops")
+            savedlaptops!!.forEach {
+                linearLayout.addView(addItem(it))
+            }
+        }
+
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putParcelableArrayList("laptops",laptops)
     }
 
     private fun initViews() {
